@@ -1,6 +1,14 @@
 This project was made with React
 
-Clone and run yarn install to install dependencies for this project: Please see package.json for details
+Clone and run yarn install to install dependencies for this project: Please see package.json for details. 
+
+##########################################################################################################
+
+To configure set .env file to  "NODE_PATH=./src" 
+
+#########################################################################################################
+
+Dependencies:
 
 "@material-ui/core": "^4.0.1",
 "@material-ui/icons": "^4.0.1",
