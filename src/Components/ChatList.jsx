@@ -12,42 +12,50 @@ import GridItem from "_components/GridItem";
 import ListItem from "@material-ui/core/ListItem";
 import List from "@material-ui/core/List";
 import Button from "@material-ui/core/Button";
+
 const useStyles = makeStyles(theme => ({
   chatsContainer: {
     display: "fixed",
     marginLeft: "250px",
     backgroundColor: "#0AA2D8"
   },
-  textField: {
-    width: "250px",
-    height: " 25px"
-  },
-  button: {
-    borderColor: "white",
-    backgroundColor: "#0AA2D8",
-    border: "1px solid",
-    height: " 25px",
-    color: "white"
+  avatar: {
+    margin: 10
   },
   chat: {
     padding: 5,
     backgroundColor: "white",
+    borderRadius: 10,
+    marginRight: 5
+  },
+
+  textField: {
+    width: "250px",
+    height: " 25px",
+    padding: "5px",
     borderRadius: 5
+  },
+  button: {
+    borderColor: "white",
+    color: "white",
+    backgroundColor: "",
+    border: "1px solid",
+    height: " 25px",
+    width: "50px"
   },
   chatList: {
     "&:hover,&:focus": {
       color: "#0AA2D8",
       background: "whitesmoke"
-    }
+    },
+    padding: "none"
   },
 
   hide: {
     display: "none"
   },
   content: {
-    marginRight: 0,
     marginTop: "none",
-
     "&:hover,&:focus": {
       color: "#0AA2D8",
       background: "white"
@@ -104,7 +112,7 @@ export default function ChatList(props) {
                       color="textPrimary"
                     >
                       <br />
-                      {props.chatDate}
+                      {props.chatDate.slice(0, -36)}
                     </Typography>
                   }
                 />
@@ -113,47 +121,69 @@ export default function ChatList(props) {
           </main>
         </GridItem>
 
-        <div className={classes.root}>
-          <GridItem xs={12} md={12} sm={12}>
-            <div className={classes.chatsContainer}>
-              <div className={clsx(!open && classes.hide)}>
-                {props.chats.map((msgs, i) => (
-                  <ListItem key={i}>
-                    {msgs.senderId !== 1000 ? (
-                      <ListItemAvatar>
-                        <Avatar>{props.senderAvatar.toString()}</Avatar>
-                      </ListItemAvatar>
-                    ) : (
-                      <ListItemAvatar>
-                        {" "}
-                        <Avatar>{props.userAvatar.toString()}</Avatar>{" "}
-                      </ListItemAvatar>
-                    )}
+        <GridItem xs={12} md={12} sm={12}>
+          <div className={classes.chatsContainer}>
+            <div className={clsx(!open && classes.hide)}>
+              {props.chats.map((msgs, i) => (
+                <ListItem key={i}>
+                  {msgs.senderId !== 1000 ? (
+                    <>
+                      <ListItemText
+                        className={classes.chat}
+                        primary={msgs.content.toString()}
+                        secondary={
+                          <Typography
+                            key={i}
+                            component="span"
+                            variant="body2"
+                            style={{ display: "inline" }}
+                            color="textPrimary"
+                          >
+                            <br />
+                            {msgs.createdAt.toString().slice(0, -36)}
+                          </Typography>
+                        }
+                      />
 
-                    <ListItemText
-                      className={classes.chat}
-                      primary={msgs.content.toString()}
-                      secondary={
-                        <Typography
-                          key={i}
-                          component="span"
-                          variant="body2"
-                          style={{ display: "inline" }}
-                          color="textPrimary"
-                        >
-                          <br />
-                          {msgs.createdAt.toString()}
-                        </Typography>
-                      }
-                    />
-                  </ListItem>
-                ))}
-                <input className={classes.textField} />
-                <Button className={classes.button}>SEND</Button>
-              </div>
+                      <ListItemAvatar>
+                        <Avatar className={classes.avatar}>
+                          {props.senderAvatar.toString()}
+                        </Avatar>
+                      </ListItemAvatar>
+                    </>
+                  ) : (
+                    <>
+                      <ListItemAvatar>
+                        <Avatar className={classes.avatar}>
+                          {props.userAvatar.toString()}
+                        </Avatar>
+                      </ListItemAvatar>
+                      <ListItemText
+                        className={classes.chat}
+                        primary={msgs.content.toString()}
+                        secondary={
+                          <Typography
+                            key={i}
+                            component="span"
+                            variant="body2"
+                            style={{ display: "inline" }}
+                            color="textPrimary"
+                          >
+                            <br />
+                            {msgs.createdAt.toString().slice(0, -36)}
+                          </Typography>
+                        }
+                      />
+                    </>
+                  )}
+                </ListItem>
+              ))}
+
+              <input className={classes.textField} />
+              <Button className={classes.button}>SEND</Button>
             </div>
-          </GridItem>
-        </div>
+          </div>
+        </GridItem>
       </GridContainer>
     </>
   );
