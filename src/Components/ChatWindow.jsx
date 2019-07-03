@@ -78,7 +78,7 @@ class ChatWindow extends React.Component {
               <Tab label="CONTACTS" />
             </Tabs>
           </AppBar>
-          <div style={{ overflow: "auto", maxHeight: "600px" }}>
+          <div style={{ overflow: "auto"}}>
             {this.state.isUserChats}
           </div>
         </div>
