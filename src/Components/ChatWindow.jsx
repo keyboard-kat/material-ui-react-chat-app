@@ -26,31 +26,33 @@ class ChatWindow extends React.Component {
           userChats.messages[i].createdAt
         );
       }
-    });
-    const isUserChats = this.mapToDrawer(ChatData);
 
-    return this.setState({ isUserChats });
+      const isUserChats = this.mapChatData(ChatData);
+
+      return this.setState({ isUserChats });
+    });
   };
 
-  mapToDrawer = chatsArray =>
+  mapChatData = chatsArray =>
     chatsArray.map((chatData, i) => {
       let chatUser = chatData.users.find(id => id !== 1000);
       let sender = UsersData.find(user => user.id === chatUser);
 
-      const isSender = sender.firstName.charAt(0) + sender.lastName.charAt(0);
+      const isSenderAvatar =
+        sender.firstName.charAt(0) + sender.lastName.charAt(0);
 
       const date = chatData.messages[0].createdAt;
       const content = chatData.messages[0].content;
-
       const isUser = UsersData.find(user => user.id === 1000);
       const isUserAvatar =
         isUser.firstName.charAt(0) + isUser.lastName.charAt(0);
-      this.setState({ isUserAvatar, isSender });
+
+      this.setState({ isUserAvatar, isSenderAvatar });
 
       return (
         <ChatList
           chats={chatData.messages}
-          senderAvatar={isSender}
+          senderAvatar={isSenderAvatar}
           chatDate={date.toString()}
           chatContent={content}
           userAvatar={isUserAvatar}
