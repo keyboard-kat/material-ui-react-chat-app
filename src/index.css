@@ -1,0 +1,14 @@
+html,
+body {
+  background: black;
+  height: 1%;
+  margin: 0;
+  /* -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; */
+}
+
+#root {
+  height: inherit;
+}
