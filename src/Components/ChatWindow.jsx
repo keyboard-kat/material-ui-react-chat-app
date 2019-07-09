@@ -3,83 +3,91 @@ import ChatData from "Data/chats.json";
 import UsersData from "Data/users.json";
 import withStyles from "@material-ui/core/styles/withStyles";
 import componentsStyle from "Styles/componentsStyle.jsx";
-import ChatList from "Components/ChatList";
+import ChatsWrapper from "Components/ChatsWrapper";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 class ChatWindow extends React.Component {
   state = {
-    isUserChats: "",
-    isUserAvatar: ""
+    isUserChats: undefined,
+    isUserLoggedIn: undefined,
+    isUserAvatar: undefined
   };
   componentDidMount() {
+    this.setUserLoggedIn();
     this.getUserChats();
   }
 
+  setUserLoggedIn = () => {
+    const isUserLoggedIn = UsersData.find(
+      userLoggedIn => userLoggedIn.id === 1000
+    );
+    const isUserAvatar =
+      isUserLoggedIn.firstName.charAt(0) + isUserLoggedIn.lastName.charAt(0);
+    this.setState({ isUserLoggedIn, isUserAvatar });
+    return isUserLoggedIn.id;
+  };
+
   getUserChats = () => {
     ChatData.filter(userChats => {
-      userChats.users.includes(1000, 0);
+      userChats.users.includes(id => id === 1000);
+      userChats.messages.map(i => {
+        for (let i in userChats.messages) {
+          userChats.messages[i].createdAt = new Date(
+            userChats.messages[i].createdAt
+          )
+            .toString()
+            .slice(0, -36);
+        }
 
-      for (let i in userChats.messages) {
-        userChats.messages[i].createdAt = new Date(
-          userChats.messages[i].createdAt
-        );
-      }
+        return userChats.messages;
+      });
+      const userChatData = ChatData;
 
-      const isUserChats = this.mapChatData(ChatData);
+      return this.setChatObject(userChatData);
+    });
+  };
+
+  setChatObject = chats => {
+    let userChats = [];
+    chats.map(s => {
+      let chatUser = s.users.find(id => id !== 1000);
+      let userData = UsersData.find(user => user.id === chatUser);
+      const session = {
+        id: userData.id,
+        messages: s.messages,
+        sessionUser: userData.firstName + " " + userData.lastName,
+        sessionAvatar:
+          userData.firstName.charAt(0) + userData.lastName.charAt(0),
+        sessionPreview: s.messages[0].content,
+        sessionDate: s.messages[0].createdAt
+      };
+      userChats.push(session);
+      const isUserChats = userChats;
 
       return this.setState({ isUserChats });
     });
   };
 
-  mapChatData = chatsArray =>
-    chatsArray.map((chatData, i) => {
-      let chatUser = chatData.users.find(id => id !== 1000);
-      let sender = UsersData.find(user => user.id === chatUser);
-
-      const isSenderAvatar =
-        sender.firstName.charAt(0) + sender.lastName.charAt(0);
-
-      const date = chatData.messages[0].createdAt;
-      const content = chatData.messages[0].content;
-      const isUser = UsersData.find(user => user.id === 1000);
-      const isUserAvatar =
-        isUser.firstName.charAt(0) + isUser.lastName.charAt(0);
-
-      this.setState({ isUserAvatar, isSenderAvatar });
-
-      return (
-        <ChatList
-          chats={chatData.messages}
-          senderAvatar={isSenderAvatar}
-          chatDate={date.toString()}
-          chatContent={content}
-          userAvatar={isUserAvatar}
-          key={i}
-        />
-      );
-    });
-
   render() {
     const { classes } = this.props;
     return (
       <>
-        <div
-          style={{ marginTop: "200px", maxHeight: "700px" }}
-          className={classes.mainRaised}
-        >
-          <AppBar
-            style={{ backgroundColor: "#0AA2D8", paddingTop: "50px" }}
-            position="static"
-          >
+        <div className={classes.mainRaised}>
+          <AppBar className={classes.appBar} position="static">
             <Tabs value={0}>
               <Tab label="MESSAGES" />
-              <Tab label="CONTACTS" />
             </Tabs>
           </AppBar>
-          <div style={{ overflow: "auto"}}>
-            {this.state.isUserChats}
+          <div className="container">
+            <div className="row justify-content-start">
+              <ChatsWrapper
+                userChats={this.state.isUserChats}
+                userLoggedIn={this.state.isUserLoggedIn}
+                userAvatar={this.state.isUserAvatar}
+              />
+            </div>
           </div>
         </div>
       </>
