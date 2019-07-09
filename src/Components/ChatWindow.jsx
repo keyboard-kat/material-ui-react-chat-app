@@ -54,15 +54,15 @@ class ChatWindow extends React.Component {
     chats.map(s => {
       let chatUser = s.users.find(id => id !== 1000);
       let userData = UsersData.find(user => user.id === chatUser);
-
+      let sortedByDate = s.messages.sort((a, b) => a.createdAt - b.createdAt);
       const session = {
         id: userData.id,
-        messages: s.messages.sort((a, b) => a.createdAt - b.createdAt),
+        messages: sortedByDate,
         sessionUser: userData.firstName + " " + userData.lastName,
         sessionAvatar:
           userData.firstName.charAt(0) + userData.lastName.charAt(0),
-        sessionPreview: s.messages[0].content,
-        sessionDate: s.messages[0].createdAt
+        sessionPreview: sortedByDate[sortedByDate.length - 1].content,
+        sessionDate: sortedByDate[sortedByDate.length - 1].createdAt
       };
       userChats.push(session);
 
