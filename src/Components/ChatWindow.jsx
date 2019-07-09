@@ -54,9 +54,10 @@ class ChatWindow extends React.Component {
     chats.map(s => {
       let chatUser = s.users.find(id => id !== 1000);
       let userData = UsersData.find(user => user.id === chatUser);
+
       const session = {
         id: userData.id,
-        messages: s.messages,
+        messages: s.messages.sort((a, b) => a.createdAt - b.createdAt),
         sessionUser: userData.firstName + " " + userData.lastName,
         sessionAvatar:
           userData.firstName.charAt(0) + userData.lastName.charAt(0),
@@ -64,6 +65,7 @@ class ChatWindow extends React.Component {
         sessionDate: s.messages[0].createdAt
       };
       userChats.push(session);
+
       const isUserChats = userChats;
 
       return this.setState({ isUserChats });
@@ -94,5 +96,4 @@ class ChatWindow extends React.Component {
     );
   }
 }
-
 export default withStyles(componentsStyle)(ChatWindow);
