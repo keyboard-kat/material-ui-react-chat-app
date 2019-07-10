@@ -1,12 +1,8 @@
+./chatApp.png
+
 This project was made with React
 
-Clone and run yarn install to install dependencies for this project: Please see package.json for details. 
-
-## Config .env
-
-set .env file at root to: "NODE_PATH=./src" 
-
-## Dependencies
+Clone and run yarn install to install dependencies for this project: Please see package.json for details
 
 "@material-ui/core": "^4.0.1",
 "@material-ui/icons": "^4.0.1",
