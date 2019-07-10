@@ -80,7 +80,7 @@ export default function ChatsWrapper(props) {
         className="col"
         style={{
           overflow: "auto",
-          maxHeight: "560px"
+          maxHeight: "500px"
         }}
       >
         <div className={clsx(!open && classes.hide)}>
