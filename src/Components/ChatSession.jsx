@@ -36,7 +36,7 @@ function ChatSession(props) {
                   <Typography
                     key={i}
                     component="span"
-                    variant="body"
+                    variant="subtitle2"
                     color="white"
                   >
                     <br />
@@ -64,7 +64,7 @@ function ChatSession(props) {
                   <Typography
                     key={i}
                     component="span"
-                    variant="body"
+                    variant="subtitle2"
                     color="white"
                   >
                     <br />
