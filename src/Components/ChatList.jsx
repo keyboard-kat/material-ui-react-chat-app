@@ -16,7 +16,7 @@ export default function ChatList(props) {
         secondary={
           <Typography
             component="span"
-            variant="body"
+       variant="body2"
             style={{ display: "inline" }}
           >
             <br />
