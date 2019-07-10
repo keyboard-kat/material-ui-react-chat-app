@@ -1,4 +1,4 @@
-./chatApp.png
+[view project png](./chatApp.png)
 
 This project was made with React
 
