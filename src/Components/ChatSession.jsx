@@ -37,7 +37,7 @@ function ChatSession(props) {
                     key={i}
                     component="span"
                     variant="subtitle2"
-                    color="white"
+                    color="inherit"
                   >
                     <br />
                     {msgs.createdAt}
@@ -65,7 +65,7 @@ function ChatSession(props) {
                     key={i}
                     component="span"
                     variant="subtitle2"
-                    color="white"
+                    color="inherit"
                   >
                     <br />
                     {msgs.createdAt}
